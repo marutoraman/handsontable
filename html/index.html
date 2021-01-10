@@ -1,29 +1,29 @@
 <html>
     <head>
-        <title>eelテスト</title>
+        <title>handsontableを使った検索ツール</title>
         <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./handsontable.min.css" />
     </head>
     <body>
-        <h2>eelテスト</h2>
+        <h2>handsontableを使った検索ツール</h2>
+        <p>キャラクターデータが保存されたjsonデータのPathを指定してください</p>
         <div class="">
-            CSVファイル名<input id="csv_name" type="text"></input><br/>
+            JSON名<input id="json_name" type="text" value="data/table_data.json"></input><button id="read_json">読み込み</button><br/>
             検索ワード<input id="serch_word" type="text"></input>
             <button id="search">検索</button><br/>
         </div>
+        <br/>
+        <p>テーブルはExcelのようにセル単位で編集が可能です</p>
+        <button id="save_table">テーブル保存</button>
+        <button id="add_data">行追加</button>
+        <button id="delete_data">行削除</button><br/>
+        <div id="grid"><!-- ここにテーブルが入る --></div> 
+        <p>ログ表示エリア</p>
         <div>
             <textarea id="result" class="log-view-area"></textarea>
         </div>
         <script type="text/javascript" src="./eel.js"></script>
-        <script>
-            search.addEventListener('click', () => {
-                //alert(serch_word.value)
-                eel.kimetsu_search(serch_word.value,csv_name.value)
-            })
-
-            eel.expose(view_log_js)
-            function view_log_js(text){
-                result.value += text + "\n"
-            }
-        </script>
+        <script src="./handsontable.min.js"></script>
+        <script type="text/javascript" src="./table.js"></script>
     </body>
 </html>

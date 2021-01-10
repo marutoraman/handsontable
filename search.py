@@ -1,26 +1,23 @@
 import pandas as pd
 import eel
+import json
 
 ### デスクトップアプリ作成課題
-def kimetsu_search(word,csv_name):
+def kimetsu_search(word,json_name):
     # 検索対象取得
-    df=pd.read_csv("./{}".format(csv_name))
+    df=pd.read_json("./{}".format(json_name))
     source=list(df["name"])
-
+    tokutyou=list(df["tokutyou"])
+    
     # 検索
-    if word in source:
-        print("『{}』はいます".format(word))
-        eel.view_log_js("『{}』はいます".format(word))
+    find_df=df[df["name"]==word]
+    if len(find_df)>=1:
+        print(f"『{word}』の特徴は{list(find_df['tokutyou'])[0]}です")
+        eel.view_log_js(f"『{word}』の特徴は{list(find_df['tokutyou'])[0]}です")
     else:
         print("『{}』はありません".format(word))
-        eel.view_log_js("『{}』はいません".format(word))
+        eel.view_log_js("『{}』は未登録です".format(word))
         eel.view_log_js("『{}』を追加します".format(word))
-        # 追加
-        #add_flg=input("追加登録しますか？(0:しない 1:する)　＞＞　")
-        #if add_flg=="1":
-        source.append(word)
-    
-    # CSV書き込み
-    df=pd.DataFrame(source,columns=["name"])
-    df.to_csv("./{}".format(csv_name),encoding="utf_8-sig")
-    print(source)
+        
+        # データの追加
+        eel.addData(word)
